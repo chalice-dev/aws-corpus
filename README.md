@@ -5,8 +5,8 @@ One-liner to download / spider / mirror a local copy of `docs.aws.amazon.com` fr
 
 First install: https://github.com/hartator/wayback-machine-downloader
 
-`sudo apt-get -y install ruby
-sudo gem install wayback_machine_downloader`
+```sudo apt-get -y install ruby
+sudo gem install wayback_machine_downloader```
 
 ## Spidering / Crawling / Mirroring
 
