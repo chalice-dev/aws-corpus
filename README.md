@@ -14,6 +14,15 @@ sudo gem install wayback_machine_downloader
 
 `time wayback_machine_downloader --only '/^https:\/\/docs\.aws\.amazon\.com\/.+\/latest\/.+\.html$/' --exclude '/docs\.aws\.amazon\.com\/[a-z]+_[a-z]+\//' --concurrency 10 https://docs.aws.amazon.com`
 
+### Processing the corpus
+
+You can remove any duplicate files with `rdfind`:
+
+```
+rdfind -deleteduplicates true websites
+```
+
+
 ## Background
 
 - `docs.aws.amazon.com` does not lend itself to spidering. 'View source' on the main page shows it is rendered with javascript, which would reqiure a headless spider. The ones that actually work cost money.
