@@ -12,7 +12,7 @@ sudo gem install wayback_machine_downloader
 
 ## Spidering / Crawling / Mirroring
 
-`time wayback_machine_downloader --only '/^https:\/\/docs\.aws\.amazon\.com\/.+\/latest\/.+\.html$/' --exclude '/docs\.aws\.amazon\.com\/[a-z]+_[a-z]+\//' --concurrency 10 https://docs.aws.amazon.com`
+`time wayback_machine_downloader --only '/^https:\/\/docs\.aws\.amazon\.com\/.+\/latest\/.+\.html$/' --exclude '/docs\.aws\.amazon\.com\/[a-z]+_[a-z]+\//' --concurrency 5 https://docs.aws.amazon.com`
 
 ### Processing the corpus
 
@@ -28,4 +28,4 @@ rdfind -deleteduplicates true websites
 - `docs.aws.amazon.com` does not lend itself to spidering. 'View source' on the main page shows it is rendered with javascript, which would reqiure a headless spider. The ones that actually work cost money.
 - They do publish sitemaps, but they are not exhaustive, and if you try to spider the docs directly, you will quickly be blocked.
 - Some of the docs are on GitHub, but are spread across hundreds of repos.
-- If you incerase the concurrency above 5, you'll probably get rate limited by the Internet Archive.
+- If you incerase the concurrency above 5, you'll probably get blocked by the Internet Archive.
