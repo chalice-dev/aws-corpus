@@ -16,12 +16,17 @@ sudo gem install wayback_machine_downloader
 
 ### Processing the corpus
 
-You can remove any duplicate files with `rdfind`:
+You can remove any duplicate files (identical contents) with `rdfind`:
 
 ```
 rdfind -deleteduplicates true websites
 ```
 
+Remove any files or directories with '?' that made it in:
+
+```
+find . | grep '?' | xargs -L1 rm -fr
+```
 
 ## Background
 
