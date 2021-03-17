@@ -6,7 +6,7 @@ One-liner to download / spider / mirror a local copy of `docs.aws.amazon.com` fr
 First install: https://github.com/hartator/wayback-machine-downloader
 
 ```
-sudo apt-get -y install ruby rdfind
+sudo apt-get -y install ruby rdfind p7zip-full
 sudo gem install wayback_machine_downloader
 ```
 
@@ -27,6 +27,15 @@ Remove any files or directories with '?' that made it in:
 ```
 find . | grep '?' | xargs -L1 rm -fr
 ```
+
+Compute an estimate of the amount of information in the corpus (and create a compressed archive):
+
+```
+cd ~
+7z a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=off ~/docs.aws.amazon.com.7z ~/websites/docs.aws.amazon.com/
+```
+
+
 
 ## Background
 
