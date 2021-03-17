@@ -12,7 +12,7 @@ sudo gem install wayback_machine_downloader
 
 ## Spidering / Crawling / Mirroring
 
-`time wayback_machine_downloader -l --only '/^https:\/\/docs\.aws\.amazon\.com\/.+\/latest\/.+\.html$/' --exclude '/docs\.aws\.amazon\.com\/[a-z]+_[a-z]+\//' --concurrency 10 https://docs.aws.amazon.com`
+`time wayback_machine_downloader --only '/^https:\/\/docs\.aws\.amazon\.com\/.+\/latest\/.+\.html$/' --exclude '/docs\.aws\.amazon\.com\/[a-z]+_[a-z]+\//' --concurrency 10 https://docs.aws.amazon.com`
 
 ## Background
 
