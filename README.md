@@ -41,7 +41,6 @@ Check how many pages of documentation we ended up with, in this case, `86,570`:
 Compute an estimate of the amount of information in the corpus (and create a compressed archive), in this case `677MB`:
 
 ```
-cd ~
 7z a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=off ~/docs.aws.amazon.com.7z ~/websites/docs.aws.amazon.com/
 ```
 
