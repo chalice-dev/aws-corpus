@@ -15,7 +15,7 @@ Most code was run on a `c5a.xlarge`, however, for long runs with `parallel`, you
 # For Ubuntu
 cd ~
 sudo apt -y update
-sudo apt-get -y install ruby rdfind p7zip-full parallel
+sudo apt-get -y install ruby rdfind p7zip-full parallel lrzipt
 sudo gem install wayback_machine_downloader
 wget https://repo.anaconda.com/archive/Anaconda3-2020.11-Linux-x86_64.sh -O ~/anaconda.sh
 bash ~/anaconda.sh -b -p $HOME/anaconda
@@ -329,7 +329,7 @@ The _expected size_ of the compressed version of the parallel corpus is `3114955
 
 This must be partly due to using the wrong compression algorithm, as 7zip can't compress streams. Indeed, `aws_corpus.tar.gz` is `254MB` compared to `aws_corpus.7z` (above) which is `312MB`.
 
-Lets see if we can use NLP to bring these corpora into closer alignment by running the same [spaCy text preprocessor](https://gist.github.com/omri374/ec1c243a5a94a657dae40078d47977b6) on both corpora.
+Lets see if we can use NLP to bring these corpora into closer alignment by running the same [spaCy text preprocessor](https://gist.github.com/omri374/ec1c243a5a94a657dae40078d47977b6) on both corpora, including stop word removal, lemmatization, etc. 
 
 ```bash
 cd ~
@@ -346,5 +346,69 @@ Run the preprocessor:
 cd ~
 parallel < aws_corpus.list
 ```
+
+Compress the parallel corpus with `lzrtar`:
+
+```bash
+cd ~
+lrztar aws_corpus_spaCy
+```
+
+Now, the preprocessed `docs.aws.amazon.com` is `1.3GB` uncompressed, and `28MB` when compressed with `lzrtar`, a compression ratio of `41.6`, whereas `awsdocs` is `62MB` uncompressed and `4.6M` compressed, a compression ratio of `9.3`. The expected size of the compressed parallel corpus is `33451720` bytes, whereas the actual size is `31810052` bytes, an improvement of `1641668` bytes or `1.6MB` over our expectation.
+
+Let's take all the text for each corpus, and put them into one large file per corpus, one large file overall, and compare compression ratios:
+
+```bash
+find awsdocs -type f -exec cat {} + > awsdocs.txt
+find docs.aws.amazon.com -type f -exec cat {} + > docsaws.txt
+cat awsdocs.txt docsaws.txt > docs.txt 
+lrzip awsdocs.txt
+lrzip docsaws.txt
+lrzip docs.txt
+```
+
+Now, `docsaws` is `25MB`, `awsdocs` is `4.3MB` and `docs` is, again, `28MB`, and we improved compression over our expectation by `64KB`. 
+
+Up to now, the words in our documents were in the same order they appeared in the original document. Let's try putting each word in `docs` on one line, sorting the entire thing, and then compressing. This shows we have `68,856,518` words in our corpus:
+
+```bash
+cat docs.txt | tr " " "\n" > words.list
+cat docs.txt | tr " " "\n" | grep . > words.list
+lrzip words_sorted.list
+```
+
+The compressed list of sorted words is only `1.6MB`, demonstrating that it takes `26.4MB` of space to represent the order of words in our corpus. 
+
+Let's test our compressor by making every word in the sorted corpus unique, prepending it with a count of the number of times it occurs, and sorting again. In theory, the compressor could use this information: 
+
+```bash
+cat words_sorted.list | uniq -c > words_sorted_uniq.list
+cat words_sorted.list | uniq -c | sort -n --parallel=96 | tac > words_sorted_uniq.list
+lrzip words_sorted_uniq.list
+```
+
+Our corpus is now only `1.5MB`.
+
+We can also view `words_sorted_uniq.list` to see the most frequent words in our corpus, and how often they occur. No surprises here:
+
+```
+2458894 aws
+ 768456 string
+ 739287 property
+ 633644 amazon
+ 601828 return
+ 583947 cdk
+ 546867 value
+ 496027 object
+ 459157 request
+ 413411 class
+ 403076 public
+ 401986 type
+ 395220 use
+ 384263 method
+ 379585 var
+ 378868 specify
+ ```
+
 
 
