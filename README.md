@@ -348,14 +348,14 @@ cd ~
 parallel < aws_corpus.list
 ```
 
-Compress the parallel corpus with `lzrtar`:
+Compress the parallel corpus with `lrztar`:
 
 ```bash
 cd ~
 lrztar aws_corpus_spaCy
 ```
 
-Now, the preprocessed `docs.aws.amazon.com` is `1.3GB` uncompressed, and `28MB` when compressed with `lzrtar`, a compression ratio of `41.6`, whereas `awsdocs` is `62MB` uncompressed and `4.6M` compressed, a compression ratio of `9.3`. The expected size of the compressed parallel corpus is `33451720` bytes, whereas the actual size is `31810052` bytes, an improvement of `1641668` bytes or `1.6MB` over our expectation.
+Now, the preprocessed `docs.aws.amazon.com` is `1.3GB` uncompressed, and `28MB` when compressed with `lrztar`, a compression ratio of `41.6`, whereas `awsdocs` is `62MB` uncompressed and `4.6M` compressed, a compression ratio of `9.3`. The expected size of the compressed parallel corpus is `33451720` bytes, whereas the actual size is `31810052` bytes, an improvement of `1641668` bytes or `1.6MB` over our expectation.
 
 Let's take all the text for each corpus, and put them into one large file per corpus, one large file overall, and compare compression ratios:
 
