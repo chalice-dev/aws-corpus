@@ -15,7 +15,7 @@ Most code was run on a `c5a.xlarge`, however, for long runs with `parallel`, you
 # For Ubuntu
 cd ~
 sudo apt -y update
-sudo apt-get -y install ruby rdfind p7zip-full parallel lrzipt
+sudo apt-get -y install ruby rdfind p7zip-full parallel lrzip
 sudo gem install wayback_machine_downloader
 wget https://repo.anaconda.com/archive/Anaconda3-2020.11-Linux-x86_64.sh -O ~/anaconda.sh
 bash ~/anaconda.sh -b -p $HOME/anaconda
