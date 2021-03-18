@@ -10,8 +10,9 @@ One-liner to download / spider / mirror / crawl a local copy of `docs.aws.amazon
 ```bash
 #!/bin/bash
 # For Ubuntu
+cd ~
 sudo apt -y update
-sudo apt-get -y install ruby rdfind p7zip-full
+sudo apt-get -y install ruby rdfind p7zip-full parallel
 sudo gem install wayback_machine_downloader
 wget https://repo.anaconda.com/archive/Anaconda3-2020.11-Linux-x86_64.sh -O ~/anaconda.sh
 bash ~/anaconda.sh -b -p $HOME/anaconda
@@ -22,7 +23,7 @@ conda install spacy
 
 ## Spidering / Crawling / Mirroring
 
-You should have the site by the same time the next day.
+You should have the site by the same time the next day. Run this in `~`.
 
 `time wayback_machine_downloader --only '/^https:\/\/docs\.aws\.amazon\.com\/.+\/latest\/.+\.html$/' --exclude '/docs\.aws\.amazon\.com\/[a-z]+_[a-z]+\//' --concurrency 5 https://docs.aws.amazon.com`
 
@@ -30,32 +31,37 @@ You should have the site by the same time the next day.
 
 You can remove any duplicate files (identical contents) with `rdfind`:
 
-```
+```bash
+cd ~
 rdfind -deleteduplicates true websites
 ```
 
 Remove any files or directories with '?' that made it in:
 
-```
+```bash
+cd ~
 find . | grep '?' | xargs -L1 rm -fr
 find . | grep '?' | xargs -d "\n" -I {} rm -fr '{}'
 ```
 
 Check how many pages of documentation we ended up with, in this case, `86,570`:
 
-```
+```bash
+cd ~
 find . | grep html | wc -l
 ```
 
 What's our deepest level of nesting in the direction structure? <code>20</code>
 
-```
+```bash
+cd ~
 find . -type d | sed 's|[^/]||g' | sort | tail -n1 | wc -c
 ```
 
 Compute an estimate of the amount of information in the corpus (and create a compressed archive), in this case `677MB`:
 
-```
+```bash
+cd ~
 7z a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=off ~/docs.aws.amazon.com.7z ~/websites/docs.aws.amazon.com/
 ```
 
@@ -102,17 +108,28 @@ AutoScaling                                  aws-cost-management    cognitoident
 
 Create a version of the corpus that only has text, with all HTML removed:
 
-```
-#!/home/ubuntu/anaconda/bin/python
-# ~/strip_text.py
-import sys,os
-from bs4 import BeautifulSoup
+```bash
+cd ~
+echo '#!/home/ubuntu/anaconda/bin/python
+import sys,os;from bs4 import BeautifulSoup
 n=sys.argv[1]
-f=open(n);s=BeautifulSoup(f.read());f.close()
+f=open(n);
+s=BeautifulSoup(f.read());f.close()
 t=s.get_text()
-d=n.replace('websites/','websites/txt/')
-p=d.split('/')
-o='/'.join(p[:-1])
+d=n.replace("websites/","websites/txt/")
+p=d.split("/")
+o="/".join(p[:-1])
 os.makedirs(o,exist_ok=True)
-f=open(d,'w');f.write(t);f.close()
+f=open(d,"w");f.write(t);f.close()' > ~/strip_text
+chmod +x strip_text
+```
+
+```bash
+cd ~
+find websites/ -type f -name '*.html' > html.list
+sed -r -i 's/^(.*)/~\/strip_text "\1"/' html.list
+```
+
+```
+
 ```
