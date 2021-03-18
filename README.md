@@ -3,8 +3,6 @@ One-liner to download / spider / mirror a local copy of `docs.aws.amazon.com` fr
 
 ## Installation
 
-First install: https://github.com/hartator/wayback-machine-downloader
-
 ```
 sudo apt-get -y install ruby rdfind p7zip-full python3-pip
 sudo gem install wayback_machine_downloader
