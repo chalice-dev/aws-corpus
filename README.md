@@ -416,5 +416,18 @@ We can also view `words_sorted_uniq.list` to see the most frequent words in our 
  378868 specify
  ```
 
+Let's create one corpus per product, in each of `awsdocs` and `docsaws`, so that we can create product vectors. This results in `370` corpora:
+
+```bash
+cd ~
+cd aws_corpus_spaCy
+cd awsdocs
+for product in $(ls);do find $product -type f -exec cat {} + > $product.corpus;done
+cd ../docs.aws.amazon.com
+for product in $(ls);do find $product -type f -exec cat {} + > $product.corpus;done
+cd ..
+mkdir products
+find . -type f -name "*.corpus" -exec mv -t products {} +
+```
 
 
