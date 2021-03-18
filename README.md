@@ -51,7 +51,7 @@ cd ~
 find . | grep html | wc -l
 ```
 
-What's our deepest level of nesting in the direction structure? <code>20</code>
+What's our deepest level of nesting in the direction structure? <code>20</code>:
 
 ```bash
 cd ~
@@ -106,7 +106,7 @@ ApplicationAutoScaling                       aws-backup             cognito-user
 AutoScaling                                  aws-cost-management    cognitoidentity              eks                         imagebuilder                   medialive                      ram                       sumerian
 ```
 
-Create a version of the corpus that only has text, with all HTML removed:
+Create a version of the corpus that only has text, with all HTML removed. 
 
 ```bash
 cd ~
@@ -130,12 +130,14 @@ find websites/ -type f -name '*.html' > html.list
 sed -r -i 's/^(.*)/~\/strip_text "\1"/' html.list
 ```
 
+Remove the HTML. This will take a couple of hours:
+
 ```
 cd ~
 time parallel < html.list
 ```
 
-Now let's augment this corpus with the [awsdocs GitHub Organization](https://github.com/awsdocs), which has hundreds of repos (`241` as of now) of open source AWS docs full of markdown.
+Now let's augment this corpus with the [awsdocs GitHub Organization](https://github.com/awsdocs), which has hundreds of repos (`241` as of now) of open source AWS docs full of markdown:
 
 ```bash
 for i in `seq 1 50`;do curl -s "https://api.github.com/orgs/awsdocs/repos?per_page=20&page=$i" | grep full_name > aws_repos.list
@@ -148,21 +150,21 @@ cd ~/git_repos
 parallel < ~/aws_docs_git_repos.list
 ```
 
-How large is this? A healthy `825MB`.
+How large is this? A healthy `825MB`:
 
 ```bash
 cd ~
 du -sh git_repos
 ```
 
-Let's delete everything except markdown. New size is `114M`
+Let's delete everything except markdown. New size is `114M`:
 
 ```bash
 cd ~
 find git_repos -type f ! -name '*.md' -delete
 ```
 
-How much information? `17MB`
+How much information? `17MB`:
 
 ```bash
 cd ~
@@ -234,3 +236,5 @@ amazon-lumberyard-release-notes                aws-cloud-map-developer-guide    
 amazon-lumberyard-user-guide                   aws-cloud9-user-guide                             aws-management-portal-for-vcenter-user-guide  service-quotas-docs
 amazon-machinelearning-developer-guide         aws-cloudformation-user-guide                     aws-marketplace-user-guide-for-buyers         vm-import-export-user-guide
 ```
+
+
