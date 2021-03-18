@@ -130,6 +130,11 @@ find websites/ -type f -name '*.html' > html.list
 sed -r -i 's/^(.*)/~\/strip_text "\1"/' html.list
 ```
 
+```
+cd ~
+time parallel < html.list
+```
+
 Now let's augment this corpus with the [awsdocs GitHub Organization](https://github.com/awsdocs), which has hundreds of repos (`241` as of now) of open source AWS docs full of markdown.
 
 ```bash
@@ -157,7 +162,7 @@ cd ~
 find git_repos -type f ! -name '*.md' -delete
 ```
 
-How much information?
+How much information? `17MB`
 
 ```bash
 cd ~
