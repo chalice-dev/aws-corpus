@@ -21,8 +21,9 @@ wget https://repo.anaconda.com/archive/Anaconda3-2020.11-Linux-x86_64.sh -O ~/an
 bash ~/anaconda.sh -b -p $HOME/anaconda
 echo 'export PATH=$PATH:~/anaconda/bin' >> ~/.bashrc
 source ~/.bashrc
-conda install -y spacy
-conda install -y markdown
+conda install -c conda-forge spacy
+conda install -c conda-forge markdown
+conda install -c conda-forge nltk
 python -m spacy download en_core_web_sm
 ```
 
