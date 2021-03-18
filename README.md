@@ -327,7 +327,7 @@ cp -r git_repos_txt/* ~/aws_corpus/awsdocs/
 
 The _expected size_ of the compressed version of the parallel corpus is `311495596 + 15024850 = 326520446` bytes, which is the size of each compressed corpus alone. Any improvement on this when they are compressed together must be due to their mutual information. The compressed size of the parallel corpus is `326429896` bytes, which is only `90,550` bytes smaller than expected - a negligible difference.
 
-This must be partly due to using the wrong compression algorithm. Indeed, `aws_corpus.tar.gz` is `254MB` compared to `aws_corpus.7z` (above) which is `312MB`.
+This must be partly due to using the wrong compression algorithm, as 7zip can't compress streams. Indeed, `aws_corpus.tar.gz` is `254MB` compared to `aws_corpus.7z` (above) which is `312MB`.
 
 Lets see if we can use NLP to bring these corpora into closer alignment by running the same [spaCy text preprocessor](https://gist.github.com/omri374/ec1c243a5a94a657dae40078d47977b6) on both corpora.
 
