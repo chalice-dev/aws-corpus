@@ -10,6 +10,8 @@ sudo apt-get -y install ruby rdfind p7zip-full
 sudo gem install wayback_machine_downloader
 wget https://repo.anaconda.com/archive/Anaconda3-5.3.1-Linux-x86_64.sh -O ~/anaconda.sh
 bash ~/anaconda.sh -b -p $HOME/anaconda
+echo 'export PATH=$PATH:~/anaconda/bin' >> ~/.bashrc
+source ~/.bashrc
 ```
 
 ## Spidering / Crawling / Mirroring
