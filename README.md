@@ -388,7 +388,12 @@ cat words_sorted.list | uniq -c | sort -n --parallel=96 | tac > words_sorted_uni
 lrzip words_sorted_uniq.list
 ```
 
-Our corpus is now only `1.5MB`.
+Our corpus is now only `1.5MB`. What if we remove the counts of each word, resulting in just one word per line? Our corpus shrinks to just `1.1MB`. There are `316,164` "words" in the file, which is only 50% larger than in English.
+
+```bash
+cat words_sorted.list | uniq | sort -n --parallel=96 | tac > words_sorted_uniq_nocount.list
+lrzip words_sorted_uniq_nocount.list
+```
 
 We can also view `words_sorted_uniq.list` to see the most frequent words in our corpus, and how often they occur. No surprises here:
 
