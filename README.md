@@ -15,7 +15,9 @@ sudo gem install wayback_machine_downloader
 
 You should have the site by the same time the next day.
 
-`time wayback_machine_downloader --only '/^https:\/\/docs\.aws\.amazon\.com\/.+\/latest\/.+\.html$/' --exclude '/docs\.aws\.amazon\.com\/[a-z]+_[a-z]+\//' --concurrency 5 https://docs.aws.amazon.com`
+```
+time wayback_machine_downloader --only '/^https:\/\/docs\.aws\.amazon\.com\/.+\/latest\/.+\.html$/' --exclude '/docs\.aws\.amazon\.com\/[a-z]+_[a-z]+\//' --concurrency 5 https://docs.aws.amazon.com
+```
 
 ### Processing the corpus
 
@@ -35,7 +37,7 @@ find . | grep '?' | xargs -d "\n" -I {} rm -fr '{}'
 Check how many pages of documentation we ended up with, in this case, `86,570`:
 
 ```
- find . | grep html | wc -l
+find . | grep html | wc -l
 ```
 
 Compute an estimate of the amount of information in the corpus (and create a compressed archive), in this case `677MB`:
