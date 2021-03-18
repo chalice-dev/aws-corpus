@@ -1,4 +1,7 @@
 # awesome-aws-docs
+> Difficulty: Advanced
+
+
 One-liner to download / spider / mirror / crawl a local copy of `docs.aws.amazon.com` from the Internet Archive, for applications such as clustering / natural language processing / machine learning or just offline reading. Only downloads `/latest/` and only in english. Remove `html` from the command if you also want images, json, etc. The filtering reduces the number of pages downloaded from 1M+ to just ~85,000 by carefully eliminating garbage URIs, such as those that include `:80` or `?`. Note that this corpus will have the latest version of the document crawled by the Internet Archive, additionally, it may also have the last published page of documentation that is no longer active on `docs.aws.amazon.com`.
 
 ## Installation
@@ -12,6 +15,7 @@ wget https://repo.anaconda.com/archive/Anaconda3-5.3.1-Linux-x86_64.sh -O ~/anac
 bash ~/anaconda.sh -b -p $HOME/anaconda
 echo 'export PATH=$PATH:~/anaconda/bin' >> ~/.bashrc
 source ~/.bashrc
+conda update -n base -c defaults conda
 ```
 
 ## Spidering / Crawling / Mirroring
