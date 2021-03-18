@@ -12,7 +12,6 @@ Most code was run on a `c5a.xlarge`, however, for long runs with `parallel`, you
 
 ```bash
 #!/bin/bash
-# For Ubuntu
 cd ~
 sudo apt -y update
 sudo apt-get -y install ruby rdfind p7zip-full parallel lrzip
