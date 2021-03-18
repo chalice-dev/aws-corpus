@@ -131,5 +131,6 @@ sed -r -i 's/^(.*)/~\/strip_text "\1"/' html.list
 ```
 
 ```
-
+cd ~
+time parallel < html.list
 ```
