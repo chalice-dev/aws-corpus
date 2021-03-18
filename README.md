@@ -1,6 +1,5 @@
 # awesome-aws-docs
-> Difficulty: Advanced
-
+> Difficulty: Advanced<br/>
 > Awesomeness: Awesome
 
 
