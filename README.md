@@ -4,6 +4,7 @@ One-liner to download / spider / mirror a local copy of `docs.aws.amazon.com` fr
 ## Installation
 
 ```
+# For Ubuntu
 sudo apt-get -y install ruby rdfind p7zip-full python3-pip
 sudo gem install wayback_machine_downloader
 sudo pip3 install pip setuptools wheel
