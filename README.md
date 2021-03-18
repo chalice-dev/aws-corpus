@@ -18,10 +18,6 @@ bash ~/anaconda.sh -b -p $HOME/anaconda
 echo 'export PATH=$PATH:~/anaconda/bin' >> ~/.bashrc
 source ~/.bashrc
 conda install spacy
-git clone https://github.com/textpipe/textpipe.git
-cd textpipe
-python setup.py install
-cd ..
 ```
 
 ## Spidering / Crawling / Mirroring
