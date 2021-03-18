@@ -368,7 +368,7 @@ lrzip docsaws.txt
 lrzip docs.txt
 ```
 
-Now, `docsaws` is `25MB`, `awsdocs` is `4.3MB` and `docs` is, again, `28MB`, and we improved compression over our expectation by `64KB`. 
+Now, `docsaws` is `25MB`, `awsdocs` is `4.3MB` and `docs` is, again, `28MB`, and we improved compression over our expectation by an additional `64KB`. 
 
 Up to now, the words in our documents were in the same order they appeared in the original document. Let's try putting each word in `docs` on one line, sorting the entire thing, and then compressing. This shows we have `68,856,518` words in our corpus:
 
