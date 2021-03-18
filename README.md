@@ -10,6 +10,7 @@ One-liner to download / spider / mirror / crawl a local copy of `docs.aws.amazon
 ```bash
 #!/bin/bash
 # For Ubuntu
+sudo apt -y update
 sudo apt-get -y install ruby rdfind p7zip-full
 sudo gem install wayback_machine_downloader
 wget https://repo.anaconda.com/archive/Anaconda3-2020.11-Linux-x86_64.sh -O ~/anaconda.sh
