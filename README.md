@@ -21,6 +21,7 @@ echo 'export PATH=$PATH:~/anaconda/bin' >> ~/.bashrc
 source ~/.bashrc
 conda install -y spacy
 conda install -y markdown
+python -m spacy download en_core_web_sm
 ```
 
 ## Spidering / Crawling / Mirroring
@@ -306,3 +307,42 @@ Strip the markdown:
 cd ~
 time parallel < md.list
 ```
+
+It turns out that only `74` of the `241` `awsdocs` repos contained markdown.
+
+With all html and markdown removed, `docs.aws.amazon.com` is now `2GB` uncompressed and `298MB` compressed, and `awsdocs` is now `75MB` uncompressed and `40MB` compressed. 
+
+Let's combine them into one corpus, and estimate their [mutual information](https://en.wikipedia.org/wiki/Mutual_information).
+
+```bash
+cd ~
+mkdir ~/aws_corpus
+cp -r websites/txt/docs.aws.amazon.com ~/aws_corpus/docs.aws.amazon.com
+mkdir aws_corpus/awsdocs
+cp -r git_repos_txt/* ~/aws_corpus/awsdocs/
+7z a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=off ~/aws_corpus.7z ~/aws_corpus
+```
+
+The _expected size_ of the compressed version of the parallel corpus is `311495596 + 15024850 = 326520446` bytes, which is the size of each compressed corpus alone. Any improvement on this when they are compressed together must be due to their mutual information. The compressed size of the parallel corpus is `326429896` bytes, which is only `90,550` bytes smaller than expected - a negligible difference.
+
+This must be partly due to using the wrong compression algorithm. Indeed, `aws_corpus.tar.gz` is `254MB` compared to `aws_corpus.7z` (above) which is `312MB`.
+
+Lets see if we can use NLP to bring these corpora into closer alignment by running the same [spaCy text preprocessor](https://gist.github.com/omri374/ec1c243a5a94a657dae40078d47977b6) on both corpora.
+
+```bash
+cd ~
+wget https://gist.githubusercontent.com/brianmingus2/54645d9a551ec8d96e6cd4a8c7e2abaf/raw/c09de34d804c3b05fa61f65d8dd146b83438c663/spacy_preprocessor.py -O spacy_pre
+chmod + x spacy_pre
+find aws_corpus/ -type f -name "*.html" > aws_corpus.list
+find aws_corpus/ -type f -name "*.md" >> aws_corpus.list
+sed -ri 's/^/~\/spacy_pre //' aws_corpus.list
+```
+
+Run the preprocessor:
+
+```bash
+cd ~
+parallel < aws_corpus.list
+```
+
+
