@@ -51,7 +51,7 @@ cd ~
 find . | grep html | wc -l
 ```
 
-What's our deepest level of nesting in the direction structure? <code>20</code>:
+What's our deepest level of nesting in the directory structure? <code>20</code>:
 
 ```bash
 cd ~
