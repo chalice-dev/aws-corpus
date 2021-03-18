@@ -326,7 +326,7 @@ cp -r git_repos_txt/* ~/aws_corpus/awsdocs/
 7z a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=off ~/aws_corpus.7z ~/aws_corpus
 ```
 
-The _expected size_ of the compressed version of the parallel corpus is `311495596 + 15024850 = 326520446` bytes, which is the size of each compressed corpus alone. Any improvement on this when they are compressed together must be due to their mutual information. The compressed size of the parallel corpus is `326429896` bytes, which is only `90,550` bytes smaller than expected - a negligible difference.
+The _expected size_ of the compressed version of the parallel corpus is `311495596 + 15024850 = 326520446` bytes, which is the size of each compressed corpus alone. Any improvement on this when they are compressed together must be due to their mutual information. The compressed size of the parallel corpus is `326429896` bytes, which is only `90,550` bytes or `90.5KB` smaller than expected 
 
 This must be partly due to using the wrong compression algorithm, as 7zip can't compress streams. Indeed, `aws_corpus.tar.gz` is `254MB` compared to `aws_corpus.7z` (above) which is `312MB`.
 
