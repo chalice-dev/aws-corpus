@@ -1,5 +1,5 @@
 # Awesome AWS Corpus
-> Create a corpus from the AWS documentation<br/>
+> Mission: Create a corpus from the AWS documentation<br/>
 > Difficulty: Advanced<br/>
 > Awesomeness: Awesome
 
