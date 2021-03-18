@@ -19,7 +19,8 @@ wget https://repo.anaconda.com/archive/Anaconda3-2020.11-Linux-x86_64.sh -O ~/an
 bash ~/anaconda.sh -b -p $HOME/anaconda
 echo 'export PATH=$PATH:~/anaconda/bin' >> ~/.bashrc
 source ~/.bashrc
-conda install spacy
+conda install -y spacy
+conda install -y markdown
 ```
 
 ## Spidering / Crawling / Mirroring
