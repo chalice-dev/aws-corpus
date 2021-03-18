@@ -51,11 +51,3 @@ Compute an estimate of the amount of information in the corpus (and create a com
 7z a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=off ~/docs.aws.amazon.com.7z ~/websites/docs.aws.amazon.com/
 ```
 
-
-
-## Background
-
-- `docs.aws.amazon.com` does not lend itself to spidering. 'View source' on the main page shows it is rendered with javascript, which would reqiure a headless spider. The ones that actually work cost money.
-- They do publish sitemaps, but they are not exhaustive, and if you try to spider the docs directly, you will quickly be blocked.
-- Some of the docs are on GitHub, but are spread across hundreds of repos.
-- If you increase the concurrency above 5, you'll probably get blocked by the Internet Archive.
