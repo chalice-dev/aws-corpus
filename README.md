@@ -41,7 +41,25 @@ find . | grep '?' | xargs -L1 rm -fr
 find . | grep '?' | xargs -d "\n" -I {} rm -fr '{}'
 ```
 
-Inspect our directory structure:
+Check how many pages of documentation we ended up with, in this case, `86,570`:
+
+```
+find . | grep html | wc -l
+```
+
+What's our deepest level of nesting in the direction structure? <code>20</code>
+
+```
+find . -type d | sed 's|[^/]||g' | sort | tail -n1 | wc -c
+```
+
+Compute an estimate of the amount of information in the corpus (and create a compressed archive), in this case `677MB`:
+
+```
+7z a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=off ~/docs.aws.amazon.com.7z ~/websites/docs.aws.amazon.com/
+```
+
+Inspect our top-level directory structure:
 
 ```
 ubuntu@ip-172-31-33-25:~$ ls websites/docs.aws.amazon.com/
@@ -82,30 +100,19 @@ ApplicationAutoScaling                       aws-backup             cognito-user
 AutoScaling                                  aws-cost-management    cognitoidentity              eks                         imagebuilder                   medialive                      ram                       sumerian
 ```
 
-
-Check how many pages of documentation we ended up with, in this case, `86,570`:
-
-```
-find . | grep html | wc -l
-```
-
-Compute an estimate of the amount of information in the corpus (and create a compressed archive), in this case `677MB`:
-
-```
-7z a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=off ~/docs.aws.amazon.com.7z ~/websites/docs.aws.amazon.com/
-```
-
 Create a version of the corpus that only has text, with all HTML removed:
 
 ```
 #!/home/ubuntu/anaconda/bin/python
+# ~/strip_text.py
 import sys,os
 from bs4 import BeautifulSoup
 n=sys.argv[1]
 f=open(n);s=BeautifulSoup(f.read());f.close()
 t=s.get_text()
-p=n.replace("websites/","websites/txt/").split("/")
-
-
-"/".join(n.replace("websites/","websites/txt/").split("/")[:-1]))' "websites/docs.aws.amazon.com/dms/latest/APIReference/API_S3Settings.html"
+d=n.replace('websites/','websites/txt/')
+p=d.split('/')
+o='/'.join(p[:-1])
+os.makedirs(o,exist_ok=True)
+f=open(d,'w');f.write(t);f.close()
 ```
