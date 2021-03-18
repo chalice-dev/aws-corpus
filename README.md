@@ -150,11 +150,12 @@ cd ~/git_repos
 parallel < ~/aws_docs_git_repos.list
 ```
 
-How large is this? A healthy `825MB`:
+How large is this? A healthy `825MB` and `10,612` markdown files:
 
 ```bash
 cd ~
 du -sh git_repos
+find git_repos -type f -name "*.md" | wc -l
 ```
 
 Let's delete everything except markdown. New size is `114M`:
@@ -237,4 +238,65 @@ amazon-lumberyard-user-guide                   aws-cloud9-user-guide            
 amazon-machinelearning-developer-guide         aws-cloudformation-user-guide                     aws-marketplace-user-guide-for-buyers         vm-import-export-user-guide
 ```
 
+Let's [strip the markdown](https://stackoverflow.com/questions/761824/python-how-to-convert-markdown-formatted-text-to-text) so we have just text. Save this as `strip_markdown` in `~` and run `chmod +x strip_markdown` on it.
 
+```python
+#!/home/ubuntu/anaconda/bin/anaconda
+from markdown import Markdown
+from io import StringIO
+import sys, os
+
+
+def unmark_element(element, stream=None):
+    if stream is None:
+        stream = StringIO()
+    if element.text:
+        stream.write(element.text)
+    for sub in element:
+        unmark_element(sub, stream)
+    if element.tail:
+        stream.write(element.tail)
+    return stream.getvalue()
+
+
+# patching Markdown
+Markdown.output_formats["plain"] = unmark_element
+__md = Markdown(output_format="plain")
+__md.stripTopLevelTags = False
+
+def unmark(text):
+    return __md.convert(text)
+
+path = sys.argv[1]
+
+f = open(path);txt = f.read();f.close()
+
+txt_clean = unmark(txt)
+
+path_parts = path.split("/")
+
+output_dir = "/".join(path_parts[:-1])
+output_dir = output_dir.replace("git_repos", "git_repos_txt")
+
+os.makedirs(output_dir, exist_ok=True)
+
+f = open(output_dir + "/" + path_parts[-1], "w")
+f.write(txt_clean)
+f.close()
+
+```
+
+Create a list of commands to run on the the markdown files in parallel:
+
+```
+cd ~
+find git_repos -type f -name "*.md" > md.list
+sed -ri 's/^/~\/strip_markdown /' md.list
+```
+
+Strip the markdown:
+
+```
+cd ~
+time parallel < md.list
+```
