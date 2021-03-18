@@ -13,6 +13,8 @@ sudo gem install wayback_machine_downloader
 
 ## Spidering / Crawling / Mirroring
 
+You should have the site by the same time the next day.
+
 `time wayback_machine_downloader --only '/^https:\/\/docs\.aws\.amazon\.com\/.+\/latest\/.+\.html$/' --exclude '/docs\.aws\.amazon\.com\/[a-z]+_[a-z]+\//' --concurrency 5 https://docs.aws.amazon.com`
 
 ### Processing the corpus
