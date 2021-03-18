@@ -26,6 +26,13 @@ Remove any files or directories with '?' that made it in:
 
 ```
 find . | grep '?' | xargs -L1 rm -fr
+find . | grep '?' | xargs -d "\n" -I {} rm -fr '{}'
+```
+
+Check how many pages of documentation we ended up with, in this case, 86,570:
+
+```
+ find . | grep html | wc -l
 ```
 
 Compute an estimate of the amount of information in the corpus (and create a compressed archive):
