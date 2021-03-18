@@ -1,4 +1,4 @@
-# Awesome AWS Docs
+# Awesome AWS Corpus
 > Difficulty: Advanced<br/>
 > Awesomeness: Awesome
 
